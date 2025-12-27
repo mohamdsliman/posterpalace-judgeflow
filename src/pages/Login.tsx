@@ -1,27 +1,76 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Award, Mail, Lock, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
+import { z } from "zod";
+
+const loginSchema = z.object({
+  email: z.string().email("כתובת אימייל לא תקינה"),
+  password: z.string().min(6, "סיסמה חייבת להכיל לפחות 6 תווים"),
+});
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { signIn, user, isLoading: authLoading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+
+  useEffect(() => {
+    if (user && !authLoading) {
+      navigate("/dashboard");
+    }
+  }, [user, authLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors({});
+    
+    const validation = loginSchema.safeParse({ email, password });
+    if (!validation.success) {
+      const fieldErrors: { email?: string; password?: string } = {};
+      validation.error.errors.forEach((err) => {
+        if (err.path[0]) {
+          fieldErrors[err.path[0] as 'email' | 'password'] = err.message;
+        }
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
     setIsLoading(true);
     
-    // Simulate login - will be connected to backend later
-    setTimeout(() => {
-      toast.info("מערכת ההתחברות תחובר בקרוב");
+    const { error } = await signIn(email, password);
+    
+    if (error) {
+      if (error.message.includes("Invalid login credentials")) {
+        toast.error("פרטי התחברות שגויים");
+      } else if (error.message.includes("Email not confirmed")) {
+        toast.error("יש לאשר את כתובת האימייל לפני ההתחברות");
+      } else {
+        toast.error("שגיאה בהתחברות: " + error.message);
+      }
       setIsLoading(false);
-    }, 1000);
+      return;
+    }
+    
+    toast.success("התחברת בהצלחה!");
+    navigate("/dashboard");
   };
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center gradient-hero">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col gradient-hero">
@@ -50,11 +99,14 @@ const Login = () => {
                     placeholder="your@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pr-10"
+                    className={`pr-10 ${errors.email ? 'border-destructive' : ''}`}
                     dir="ltr"
                     required
                   />
                 </div>
+                {errors.email && (
+                  <p className="text-sm text-destructive">{errors.email}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -75,11 +127,14 @@ const Login = () => {
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pr-10"
+                    className={`pr-10 ${errors.password ? 'border-destructive' : ''}`}
                     dir="ltr"
                     required
                   />
                 </div>
+                {errors.password && (
+                  <p className="text-sm text-destructive">{errors.password}</p>
+                )}
               </div>
 
               <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
