@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Award, LogIn, UserPlus } from "lucide-react";
+import { Menu, X, Award, LogIn, UserPlus, LayoutDashboard, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 const navLinks = [
   { href: "/", label: "ראשי" },
@@ -14,6 +15,14 @@ const navLinks = [
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, profile, signOut, isLoading } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    setIsMenuOpen(false);
+    navigate("/");
+  };
 
   return (
     <header className="fixed top-0 right-0 left-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
@@ -47,18 +56,37 @@ export function Header() {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="sm" asChild>
-              <Link to="/login" className="gap-2">
-                <LogIn className="w-4 h-4" />
-                התחברות
-              </Link>
-            </Button>
-            <Button size="sm" asChild>
-              <Link to="/register" className="gap-2">
-                <UserPlus className="w-4 h-4" />
-                הרשמה
-              </Link>
-            </Button>
+            {isLoading ? (
+              <div className="h-9 w-24 bg-muted animate-pulse rounded-lg"></div>
+            ) : user ? (
+              <>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/dashboard" className="gap-2">
+                    <LayoutDashboard className="w-4 h-4" />
+                    {profile?.full_name || "דשבורד"}
+                  </Link>
+                </Button>
+                <Button variant="outline" size="sm" onClick={handleSignOut} className="gap-2">
+                  <LogOut className="w-4 h-4" />
+                  התנתקות
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/login" className="gap-2">
+                    <LogIn className="w-4 h-4" />
+                    התחברות
+                  </Link>
+                </Button>
+                <Button size="sm" asChild>
+                  <Link to="/register" className="gap-2">
+                    <UserPlus className="w-4 h-4" />
+                    הרשמה
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -91,12 +119,25 @@ export function Header() {
                 </Link>
               ))}
               <div className="flex gap-2 mt-4 pt-4 border-t border-border/50">
-                <Button variant="outline" size="sm" className="flex-1" asChild>
-                  <Link to="/login">התחברות</Link>
-                </Button>
-                <Button size="sm" className="flex-1" asChild>
-                  <Link to="/register">הרשמה</Link>
-                </Button>
+                {user ? (
+                  <>
+                    <Button variant="outline" size="sm" className="flex-1" asChild>
+                      <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>דשבורד</Link>
+                    </Button>
+                    <Button size="sm" className="flex-1" onClick={handleSignOut}>
+                      התנתקות
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button variant="outline" size="sm" className="flex-1" asChild>
+                      <Link to="/login" onClick={() => setIsMenuOpen(false)}>התחברות</Link>
+                    </Button>
+                    <Button size="sm" className="flex-1" asChild>
+                      <Link to="/register" onClick={() => setIsMenuOpen(false)}>הרשמה</Link>
+                    </Button>
+                  </>
+                )}
               </div>
             </nav>
           </div>

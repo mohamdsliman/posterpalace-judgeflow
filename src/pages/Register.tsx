@@ -1,52 +1,89 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Award, Mail, Lock, User, Building, ArrowLeft } from "lucide-react";
+import { Award, Mail, Lock, User, Building, ArrowLeft, Phone } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
+import { z } from "zod";
 
-const specializations = [
-  "בינה מלאכותית ולמידת מכונה",
-  "פיתוח אפליקציות מובייל",
-  "אבטחת מידע וסייבר",
-  "מערכות מבוזרות וענן",
-  "ראייה ממוחשבת ועיבוד תמונה",
-  "IoT ומערכות משובצות",
-  "פיתוח ווב",
-  "מדעי הנתונים",
-];
+const registerSchema = z.object({
+  fullName: z.string().min(2, "שם מלא חייב להכיל לפחות 2 תווים").max(100),
+  email: z.string().email("כתובת אימייל לא תקינה").max(255),
+  password: z.string().min(8, "סיסמה חייבת להכיל לפחות 8 תווים"),
+  phone: z.string().optional(),
+  institution: z.string().min(2, "יש להזין שם מוסד").max(200),
+});
 
 const Register = () => {
+  const navigate = useNavigate();
+  const { signUp, user, isLoading: authLoading } = useAuth();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password: "",
-    organization: "",
-    specialization: "",
+    phone: "",
+    institution: "",
     isExternal: false,
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    if (user && !authLoading) {
+      navigate("/dashboard");
+    }
+  }, [user, authLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors({});
+
+    const validation = registerSchema.safeParse(formData);
+    if (!validation.success) {
+      const fieldErrors: Record<string, string> = {};
+      validation.error.errors.forEach((err) => {
+        if (err.path[0]) {
+          fieldErrors[err.path[0] as string] = err.message;
+        }
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
     setIsLoading(true);
 
-    // Simulate registration - will be connected to backend later
-    setTimeout(() => {
-      toast.info("מערכת ההרשמה תחובר בקרוב");
+    const { error } = await signUp(formData.email, formData.password, {
+      full_name: formData.fullName,
+      phone: formData.phone || undefined,
+      institution: formData.institution,
+      is_external: formData.isExternal,
+    });
+
+    if (error) {
+      if (error.message.includes("already registered")) {
+        toast.error("כתובת האימייל כבר רשומה במערכת");
+      } else {
+        toast.error("שגיאה בהרשמה: " + error.message);
+      }
       setIsLoading(false);
-    }, 1000);
+      return;
+    }
+
+    toast.success("נרשמת בהצלחה! מעביר אותך לדשבורד...");
+    navigate("/dashboard");
   };
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center gradient-hero">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col gradient-hero">
@@ -77,10 +114,13 @@ const Register = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, fullName: e.target.value })
                     }
-                    className="pr-10"
+                    className={`pr-10 ${errors.fullName ? 'border-destructive' : ''}`}
                     required
                   />
                 </div>
+                {errors.fullName && (
+                  <p className="text-sm text-destructive">{errors.fullName}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -95,11 +135,14 @@ const Register = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="pr-10"
+                    className={`pr-10 ${errors.email ? 'border-destructive' : ''}`}
                     dir="ltr"
                     required
                   />
                 </div>
+                {errors.email && (
+                  <p className="text-sm text-destructive">{errors.email}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -114,53 +157,55 @@ const Register = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, password: e.target.value })
                     }
-                    className="pr-10"
+                    className={`pr-10 ${errors.password ? 'border-destructive' : ''}`}
                     dir="ltr"
                     required
                     minLength={8}
                   />
                 </div>
                 <p className="text-xs text-muted-foreground">מינימום 8 תווים</p>
+                {errors.password && (
+                  <p className="text-sm text-destructive">{errors.password}</p>
+                )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="organization">ארגון / מוסד</Label>
+                <Label htmlFor="phone">טלפון (אופציונלי)</Label>
                 <div className="relative">
-                  <Building className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Phone className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <Input
-                    id="organization"
-                    type="text"
-                    placeholder="שם החברה או המוסד האקדמי"
-                    value={formData.organization}
+                    id="phone"
+                    type="tel"
+                    placeholder="050-0000000"
+                    value={formData.phone}
                     onChange={(e) =>
-                      setFormData({ ...formData, organization: e.target.value })
+                      setFormData({ ...formData, phone: e.target.value })
                     }
                     className="pr-10"
-                    required
+                    dir="ltr"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label>תחום התמחות</Label>
-                <Select
-                  value={formData.specialization}
-                  onValueChange={(value) =>
-                    setFormData({ ...formData, specialization: value })
-                  }
-                  required
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="בחרו תחום התמחות" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {specializations.map((spec) => (
-                      <SelectItem key={spec} value={spec}>
-                        {spec}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="institution">ארגון / מוסד</Label>
+                <div className="relative">
+                  <Building className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Input
+                    id="institution"
+                    type="text"
+                    placeholder="שם החברה או המוסד האקדמי"
+                    value={formData.institution}
+                    onChange={(e) =>
+                      setFormData({ ...formData, institution: e.target.value })
+                    }
+                    className={`pr-10 ${errors.institution ? 'border-destructive' : ''}`}
+                    required
+                  />
+                </div>
+                {errors.institution && (
+                  <p className="text-sm text-destructive">{errors.institution}</p>
+                )}
               </div>
 
               <div className="flex items-center gap-3">
