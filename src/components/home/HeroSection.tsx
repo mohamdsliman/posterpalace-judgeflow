@@ -34,15 +34,15 @@ export function HeroSection() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style={{ animationDelay: "0.2s" }}>
-            <Button variant="hero" size="xl" asChild>
-              <Link to="/register" className="gap-2">
+            <Link to="/register">
+              <Button variant="hero" size="xl" className="gap-2">
                 הרשמה כשופט
                 <ArrowLeft className="w-5 h-5" />
-              </Link>
-            </Button>
-            <Button variant="outline" size="xl" asChild>
-              <Link to="/sessions">צפייה במושבים</Link>
-            </Button>
+              </Button>
+            </Link>
+            <Link to="/sessions">
+              <Button variant="outline" size="xl">צפייה במושבים</Button>
+            </Link>
           </div>
 
           {/* Stats */}

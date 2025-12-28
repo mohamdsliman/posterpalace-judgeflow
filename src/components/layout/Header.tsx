@@ -60,12 +60,12 @@ export function Header() {
               <div className="h-9 w-24 bg-muted animate-pulse rounded-lg"></div>
             ) : user ? (
               <>
-                <Button variant="ghost" size="sm" asChild>
-                  <Link to="/dashboard" className="gap-2">
+                <Link to="/dashboard">
+                  <Button variant="ghost" size="sm" className="gap-2">
                     <LayoutDashboard className="w-4 h-4" />
                     {profile?.full_name || "דשבורד"}
-                  </Link>
-                </Button>
+                  </Button>
+                </Link>
                 <Button variant="outline" size="sm" onClick={handleSignOut} className="gap-2">
                   <LogOut className="w-4 h-4" />
                   התנתקות
@@ -73,18 +73,18 @@ export function Header() {
               </>
             ) : (
               <>
-                <Button variant="ghost" size="sm" asChild>
-                  <Link to="/login" className="gap-2">
+                <Link to="/login">
+                  <Button variant="ghost" size="sm" className="gap-2">
                     <LogIn className="w-4 h-4" />
                     התחברות
-                  </Link>
-                </Button>
-                <Button size="sm" asChild>
-                  <Link to="/register" className="gap-2">
+                  </Button>
+                </Link>
+                <Link to="/register">
+                  <Button size="sm" className="gap-2">
                     <UserPlus className="w-4 h-4" />
                     הרשמה
-                  </Link>
-                </Button>
+                  </Button>
+                </Link>
               </>
             )}
           </div>
@@ -121,21 +121,21 @@ export function Header() {
               <div className="flex gap-2 mt-4 pt-4 border-t border-border/50">
                 {user ? (
                   <>
-                    <Button variant="outline" size="sm" className="flex-1" asChild>
-                      <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>דשבורד</Link>
-                    </Button>
+                    <Link to="/dashboard" onClick={() => setIsMenuOpen(false)} className="flex-1">
+                      <Button variant="outline" size="sm" className="w-full">דשבורד</Button>
+                    </Link>
                     <Button size="sm" className="flex-1" onClick={handleSignOut}>
                       התנתקות
                     </Button>
                   </>
                 ) : (
                   <>
-                    <Button variant="outline" size="sm" className="flex-1" asChild>
-                      <Link to="/login" onClick={() => setIsMenuOpen(false)}>התחברות</Link>
-                    </Button>
-                    <Button size="sm" className="flex-1" asChild>
-                      <Link to="/register" onClick={() => setIsMenuOpen(false)}>הרשמה</Link>
-                    </Button>
+                    <Link to="/login" onClick={() => setIsMenuOpen(false)} className="flex-1">
+                      <Button variant="outline" size="sm" className="w-full">התחברות</Button>
+                    </Link>
+                    <Link to="/register" onClick={() => setIsMenuOpen(false)} className="flex-1">
+                      <Button size="sm" className="w-full">הרשמה</Button>
+                    </Link>
                   </>
                 )}
               </div>
