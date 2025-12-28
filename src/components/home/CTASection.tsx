@@ -25,15 +25,15 @@ export function CTASection() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="hero" size="xl" asChild>
-              <Link to="/register" className="gap-2">
+            <Link to="/register">
+              <Button variant="hero" size="xl" className="gap-2">
                 הרשמה עכשיו
                 <ArrowLeft className="w-5 h-5" />
-              </Link>
-            </Button>
-            <Button variant="muted" size="xl" asChild>
-              <Link to="/about">מידע נוסף</Link>
-            </Button>
+              </Button>
+            </Link>
+            <Link to="/about">
+              <Button variant="muted" size="xl">מידע נוסף</Button>
+            </Link>
           </div>
         </div>
       </div>
