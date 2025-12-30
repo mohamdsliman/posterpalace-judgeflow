@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ShieldCheck, ArrowLeft, Settings2 } from "lucide-react";
+import { ShieldCheck, ArrowRight, Settings2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Header } from "@/components/layout/Header";
@@ -36,10 +36,10 @@ const AdminSetup = () => {
   const allowedEmails = useMemo(() => new Set(["admin@posterju.dge.com"]), []);
 
   useEffect(() => {
-    document.title = "הגדרת מנהל מערכת | PosterJudge";
+    document.title = "Admin Setup | PosterJudge";
     setMetaTag(
       "description",
-      "הגדרת הרשאת מנהל מערכת לחשבון PosterJudge בצורה מאובטחת."
+      "Securely set up administrator permissions for your PosterJudge account."
     );
     setCanonical(`${window.location.origin}/admin-setup`);
   }, []);
@@ -59,7 +59,7 @@ const AdminSetup = () => {
     if (!user) return;
 
     if (!allowedEmails.has(user.email ?? "")) {
-      toast.error("החשבון הזה לא מורשה להפוך למנהל מערכת");
+      toast.error("This account is not authorized to become an administrator");
       return;
     }
 
@@ -67,12 +67,12 @@ const AdminSetup = () => {
     try {
       const { error } = await supabase.functions.invoke("grant-admin");
       if (error) {
-        toast.error(error.message || "שגיאה בהפעלת הרשאת מנהל");
+        toast.error(error.message || "Error activating admin permission");
         return;
       }
 
       await refreshProfile();
-      toast.success("הרשאת מנהל מערכת הופעלה בהצלחה");
+      toast.success("Admin permission activated successfully");
       navigate("/dashboard");
     } finally {
       setIsSubmitting(false);
@@ -99,9 +99,9 @@ const AdminSetup = () => {
               <div className="w-16 h-16 rounded-2xl gradient-primary flex items-center justify-center mx-auto mb-4 shadow-glow">
                 <ShieldCheck className="w-8 h-8 text-primary-foreground" />
               </div>
-              <h1 className="text-2xl font-bold text-foreground">הגדרת מנהל מערכת</h1>
+              <h1 className="text-2xl font-bold text-foreground">Admin Setup</h1>
               <p className="text-muted-foreground mt-2">
-                פעולה חד-פעמית כדי להפוך את החשבון שלך למנהל מערכת.
+                One-time action to make your account an administrator.
               </p>
             </header>
 
@@ -111,11 +111,11 @@ const AdminSetup = () => {
                   <Settings2 className="w-5 h-5 mt-0.5 text-muted-foreground" />
                   <div>
                     <p className="text-sm text-foreground">
-                      אתה מחובר כעת עם:
-                      <span className="font-semibold" dir="ltr"> {user.email}</span>
+                      You are currently logged in as:
+                      <span className="font-semibold"> {user.email}</span>
                     </p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      רק כתובות מורשות יכולות להפעיל הרשאת מנהל.
+                      Only authorized addresses can activate admin permissions.
                     </p>
                   </div>
                 </div>
@@ -128,12 +128,12 @@ const AdminSetup = () => {
                 onClick={handleGrant}
                 disabled={!isAllowed || isSubmitting}
               >
-                {isSubmitting ? "מפעיל הרשאה..." : "הפוך אותי למנהל מערכת"}
+                {isSubmitting ? "Activating..." : "Make Me an Administrator"}
               </Button>
 
               {!isAllowed && (
                 <p className="text-sm text-destructive text-center">
-                  החשבון הזה לא מורשה להפוך למנהל מערכת.
+                  This account is not authorized to become an administrator.
                 </p>
               )}
             </section>
@@ -144,8 +144,8 @@ const AdminSetup = () => {
               to="/dashboard"
               className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
             >
-              <ArrowLeft className="w-4 h-4 rotate-180" />
-              חזרה לדשבורד
+              <ArrowRight className="w-4 h-4 rotate-180" />
+              Back to Dashboard
             </Link>
           </div>
         </section>
