@@ -23,7 +23,7 @@ const App = () => (
         <Toaster />
         <Sonner position="top-center" />
         <BrowserRouter>
-          <Routes>
+        <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/sessions" element={<Sessions />} />
             <Route path="/projects" element={<Projects />} />
@@ -32,10 +32,7 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/admin-setup" element={<AdminSetup />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
           </Routes>
         </BrowserRouter>
       </AuthProvider>
