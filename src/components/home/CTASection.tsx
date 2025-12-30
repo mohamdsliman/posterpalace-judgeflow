@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 export function CTASection() {
   return (
@@ -12,27 +12,27 @@ export function CTASection() {
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-6">
             <Sparkles className="w-4 h-4" />
-            הצטרפו אלינו
+            Join Us
           </div>
           
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            היו חלק מכנס הפוסטרים
+            Be Part of the Poster Conference
           </h2>
           
           <p className="text-lg text-muted-foreground mb-10 max-w-xl mx-auto">
-            שופטים מהמכללה ומחוצה לה מוזמנים להירשם ולתרום מניסיונם 
-            להערכת הדור הבא של פרויקטים חדשניים
+            Judges from the college and beyond are invited to register and contribute their experience 
+            to evaluating the next generation of innovative projects
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/register">
               <Button variant="hero" size="xl" className="gap-2">
-                הרשמה עכשיו
-                <ArrowLeft className="w-5 h-5" />
+                Register Now
+                <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>
             <Link to="/about">
-              <Button variant="muted" size="xl">מידע נוסף</Button>
+              <Button variant="muted" size="xl">Learn More</Button>
             </Link>
           </div>
         </div>

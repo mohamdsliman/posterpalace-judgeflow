@@ -15,33 +15,33 @@ export function Footer() {
               <span className="text-xl font-bold text-foreground">PosterJudge</span>
             </Link>
             <p className="text-muted-foreground max-w-md mb-6">
-              מערכת מתקדמת לניהול והערכת פרויקטים אקדמיים בכנסים ותערוכות. 
-              פותחה במיוחד עבור מוסדות להשכלה גבוהה.
+              An advanced system for managing and evaluating academic projects at conferences and exhibitions. 
+              Developed specifically for higher education institutions.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">קישורים מהירים</h4>
+            <h4 className="font-semibold text-foreground mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
                 <Link to="/sessions" className="text-muted-foreground hover:text-primary transition-colors">
-                  מושבים
+                  Sessions
                 </Link>
               </li>
               <li>
                 <Link to="/projects" className="text-muted-foreground hover:text-primary transition-colors">
-                  פרויקטים
+                  Projects
                 </Link>
               </li>
               <li>
                 <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">
-                  אודות
+                  About
                 </Link>
               </li>
               <li>
                 <Link to="/login" className="text-muted-foreground hover:text-primary transition-colors">
-                  התחברות
+                  Login
                 </Link>
               </li>
             </ul>
@@ -49,19 +49,19 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">יצירת קשר</h4>
+            <h4 className="font-semibold text-foreground mb-4">Contact</h4>
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-muted-foreground">
                 <Mail className="w-4 h-4" />
-                <span>support@posterjudge.co.il</span>
+                <span>support@posterjudge.com</span>
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <Phone className="w-4 h-4" />
-                <span dir="ltr">03-1234567</span>
+                <span>+1 234 567 8900</span>
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <MapPin className="w-4 h-4" />
-                <span>המכללה האקדמית</span>
+                <span>Academic College</span>
               </li>
             </ul>
           </div>
@@ -69,17 +69,17 @@ export function Footer() {
 
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} PosterJudge. כל הזכויות שמורות.
+            © {new Date().getFullYear()} PosterJudge. All rights reserved.
           </p>
           <div className="flex gap-6">
             <Link to="/privacy" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-              מדיניות פרטיות
+              Privacy Policy
             </Link>
             <Link to="/terms" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-              תנאי שימוש
+              Terms of Service
             </Link>
             <Link to="/accessibility" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-              נגישות
+              Accessibility
             </Link>
           </div>
         </div>

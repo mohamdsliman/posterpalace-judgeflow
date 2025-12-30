@@ -4,14 +4,14 @@ import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Award, Mail, Lock, ArrowLeft } from "lucide-react";
+import { Award, Mail, Lock, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 import { z } from "zod";
 
 const loginSchema = z.object({
-  email: z.string().email("כתובת אימייל לא תקינה"),
-  password: z.string().min(6, "סיסמה חייבת להכיל לפחות 6 תווים"),
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 const Login = () => {
@@ -50,17 +50,17 @@ const Login = () => {
     
     if (error) {
       if (error.message.includes("Invalid login credentials")) {
-        toast.error("פרטי התחברות שגויים");
+        toast.error("Invalid login credentials");
       } else if (error.message.includes("Email not confirmed")) {
-        toast.error("יש לאשר את כתובת האימייל לפני ההתחברות");
+        toast.error("Please confirm your email before logging in");
       } else {
-        toast.error("שגיאה בהתחברות: " + error.message);
+        toast.error("Login error: " + error.message);
       }
       setIsLoading(false);
       return;
     }
     
-    toast.success("התחברת בהצלחה!");
+    toast.success("Logged in successfully!");
     navigate("/dashboard");
   };
 
@@ -83,24 +83,23 @@ const Login = () => {
               <div className="w-16 h-16 rounded-2xl gradient-primary flex items-center justify-center mx-auto mb-4 shadow-glow">
                 <Award className="w-8 h-8 text-primary-foreground" />
               </div>
-              <h1 className="text-2xl font-bold text-foreground">התחברות למערכת</h1>
-              <p className="text-muted-foreground mt-2">ברוכים השבים לPosterJudge</p>
+              <h1 className="text-2xl font-bold text-foreground">Login</h1>
+              <p className="text-muted-foreground mt-2">Welcome back to PosterJudge</p>
             </div>
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="email">כתובת אימייל</Label>
+                <Label htmlFor="email">Email Address</Label>
                 <div className="relative">
-                  <Mail className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <Input
                     id="email"
                     type="email"
                     placeholder="your@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className={`pr-10 ${errors.email ? 'border-destructive' : ''}`}
-                    dir="ltr"
+                    className={`pl-10 ${errors.email ? 'border-destructive' : ''}`}
                     required
                   />
                 </div>
@@ -111,24 +110,23 @@ const Login = () => {
 
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <Label htmlFor="password">סיסמה</Label>
+                  <Label htmlFor="password">Password</Label>
                   <Link
                     to="/forgot-password"
                     className="text-sm text-primary hover:underline"
                   >
-                    שכחתי סיסמה
+                    Forgot password?
                   </Link>
                 </div>
                 <div className="relative">
-                  <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <Input
                     id="password"
                     type="password"
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className={`pr-10 ${errors.password ? 'border-destructive' : ''}`}
-                    dir="ltr"
+                    className={`pl-10 ${errors.password ? 'border-destructive' : ''}`}
                     required
                   />
                 </div>
@@ -138,16 +136,16 @@ const Login = () => {
               </div>
 
               <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
-                {isLoading ? "מתחבר..." : "התחברות"}
+                {isLoading ? "Logging in..." : "Login"}
               </Button>
             </form>
 
             {/* Register Link */}
             <div className="mt-6 text-center">
               <p className="text-muted-foreground">
-                אין לך חשבון?{" "}
+                Don't have an account?{" "}
                 <Link to="/register" className="text-primary font-medium hover:underline">
-                  הרשמה עכשיו
+                  Register now
                 </Link>
               </p>
             </div>
@@ -159,8 +157,8 @@ const Login = () => {
               to="/"
               className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
             >
-              <ArrowLeft className="w-4 h-4 rotate-180" />
-              חזרה לדף הבית
+              <ArrowRight className="w-4 h-4 rotate-180" />
+              Back to Home
             </Link>
           </div>
         </div>

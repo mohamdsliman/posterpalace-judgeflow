@@ -10,7 +10,9 @@ import {
   Award,
   Settings,
   LogOut,
-  ChevronLeft
+  ChevronRight,
+  BarChart3,
+  FolderOpen
 } from "lucide-react";
 
 const Dashboard = () => {
@@ -43,22 +45,22 @@ const Dashboard = () => {
   const judgeActions = [
     {
       icon: Calendar,
-      title: "המושבים שלי",
-      description: "צפייה במושבים שנרשמת אליהם",
+      title: "My Sessions",
+      description: "View sessions you've registered for",
       href: "/my-sessions",
       color: "from-primary to-primary/80",
     },
     {
       icon: ClipboardCheck,
-      title: "הערכות",
-      description: "מילוי והשלמת הערכות פרויקטים",
+      title: "Evaluations",
+      description: "Complete project evaluations",
       href: "/evaluations",
       color: "from-accent to-accent/80",
     },
     {
       icon: Award,
-      title: "רישום למושבים",
-      description: "בחירת מושבים חדשים להשתתפות",
+      title: "Register for Sessions",
+      description: "Choose new sessions to participate in",
       href: "/sessions",
       color: "from-secondary to-secondary/80",
     },
@@ -67,24 +69,31 @@ const Dashboard = () => {
   const adminActions = [
     {
       icon: Settings,
-      title: "ניהול כנסים",
-      description: "יצירה ועריכת כנסים ומושבים",
+      title: "Manage Conferences",
+      description: "Create and edit conferences and sessions",
       href: "/admin/conferences",
       color: "from-destructive to-destructive/80",
     },
     {
       icon: Users,
-      title: "ניהול משתמשים",
-      description: "צפייה ועריכת הרשאות משתמשים",
+      title: "Manage Users",
+      description: "View and edit user permissions",
       href: "/admin/users",
       color: "from-primary to-primary/80",
     },
     {
-      icon: ClipboardCheck,
-      title: "דוחות",
-      description: "צפייה בדוחות הערכה וסטטיסטיקות",
-      href: "/admin/reports",
+      icon: FolderOpen,
+      title: "Manage Projects",
+      description: "Create and organize projects",
+      href: "/admin/projects",
       color: "from-accent to-accent/80",
+    },
+    {
+      icon: BarChart3,
+      title: "Reports",
+      description: "View evaluation reports and statistics",
+      href: "/admin/reports",
+      color: "from-secondary to-secondary/80",
     },
   ];
 
@@ -98,16 +107,16 @@ const Dashboard = () => {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
                 <h1 className="text-3xl font-bold text-foreground">
-                  שלום, {profile?.full_name || user.email}!
+                  Welcome, {profile?.full_name || user.email}!
                 </h1>
                 <p className="text-muted-foreground mt-2">
-                  {isAdmin ? "מנהל מערכת" : isJudge ? "שופט" : "משתמש"}
+                  {isAdmin ? "System Administrator" : isJudge ? "Judge" : "User"}
                   {profile?.institution && ` • ${profile.institution}`}
                 </p>
               </div>
               <Button variant="outline" onClick={handleSignOut} className="gap-2">
                 <LogOut className="w-4 h-4" />
-                התנתקות
+                Sign Out
               </Button>
             </div>
           </div>
@@ -115,7 +124,7 @@ const Dashboard = () => {
           {/* Judge Actions */}
           {isJudge && (
             <div className="mb-8">
-              <h2 className="text-xl font-semibold text-foreground mb-4">פעולות שופט</h2>
+              <h2 className="text-xl font-semibold text-foreground mb-4">Judge Actions</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {judgeActions.map((action) => (
                   <Link
@@ -128,7 +137,7 @@ const Dashboard = () => {
                     </div>
                     <h3 className="text-lg font-semibold text-foreground mb-2 flex items-center gap-2">
                       {action.title}
-                      <ChevronLeft className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </h3>
                     <p className="text-muted-foreground text-sm">{action.description}</p>
                   </Link>
@@ -140,8 +149,8 @@ const Dashboard = () => {
           {/* Admin Actions */}
           {isAdmin && (
             <div>
-              <h2 className="text-xl font-semibold text-foreground mb-4">ניהול מערכת</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <h2 className="text-xl font-semibold text-foreground mb-4">System Administration</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {adminActions.map((action) => (
                   <Link
                     key={action.href}
@@ -153,7 +162,7 @@ const Dashboard = () => {
                     </div>
                     <h3 className="text-lg font-semibold text-foreground mb-2 flex items-center gap-2">
                       {action.title}
-                      <ChevronLeft className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </h3>
                     <p className="text-muted-foreground text-sm">{action.description}</p>
                   </Link>

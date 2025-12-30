@@ -8,9 +8,9 @@ import { Clock, Users, Tag, Search, Filter } from "lucide-react";
 const allSessions = [
   {
     id: 1,
-    name: "בינה מלאכותית ולמידת מכונה",
+    name: "Artificial Intelligence & Machine Learning",
     time: "09:00 - 11:00",
-    date: "15.01.2025",
+    date: "Jan 15, 2025",
     projectCount: 8,
     judgesNeeded: 4,
     spotsLeft: 2,
@@ -18,9 +18,9 @@ const allSessions = [
   },
   {
     id: 2,
-    name: "פיתוח אפליקציות מובייל",
+    name: "Mobile Application Development",
     time: "11:30 - 13:30",
-    date: "15.01.2025",
+    date: "Jan 15, 2025",
     projectCount: 6,
     judgesNeeded: 3,
     spotsLeft: 1,
@@ -28,9 +28,9 @@ const allSessions = [
   },
   {
     id: 3,
-    name: "אבטחת מידע וסייבר",
+    name: "Cybersecurity & Information Security",
     time: "14:00 - 16:00",
-    date: "15.01.2025",
+    date: "Jan 15, 2025",
     projectCount: 7,
     judgesNeeded: 4,
     spotsLeft: 3,
@@ -38,9 +38,9 @@ const allSessions = [
   },
   {
     id: 4,
-    name: "מערכות מבוזרות וענן",
+    name: "Distributed Systems & Cloud Computing",
     time: "09:00 - 11:00",
-    date: "16.01.2025",
+    date: "Jan 16, 2025",
     projectCount: 5,
     judgesNeeded: 3,
     spotsLeft: 2,
@@ -48,9 +48,9 @@ const allSessions = [
   },
   {
     id: 5,
-    name: "עיבוד תמונה וראייה ממוחשבת",
+    name: "Image Processing & Computer Vision",
     time: "11:30 - 13:30",
-    date: "16.01.2025",
+    date: "Jan 16, 2025",
     projectCount: 6,
     judgesNeeded: 3,
     spotsLeft: 3,
@@ -58,9 +58,9 @@ const allSessions = [
   },
   {
     id: 6,
-    name: "IoT ומערכות משובצות",
+    name: "IoT & Embedded Systems",
     time: "14:00 - 16:00",
-    date: "16.01.2025",
+    date: "Jan 16, 2025",
     projectCount: 4,
     judgesNeeded: 2,
     spotsLeft: 1,
@@ -75,7 +75,7 @@ const Sessions = () => {
   const fields = [...new Set(allSessions.map((s) => s.field))];
 
   const filteredSessions = allSessions.filter((session) => {
-    const matchesSearch = session.name.includes(searchQuery);
+    const matchesSearch = session.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesField = !selectedField || session.field === selectedField;
     return matchesSearch && matchesField;
   });
@@ -88,22 +88,22 @@ const Sessions = () => {
           {/* Page Header */}
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              מושבי הכנס
+              Conference Sessions
             </h1>
             <p className="text-lg text-muted-foreground">
-              בחרו את המושב המתאים לתחום ההתמחות שלכם והירשמו כשופטים
+              Choose the session that matches your expertise and register as a judge
             </p>
           </div>
 
           {/* Filters */}
           <div className="flex flex-col md:flex-row gap-4 mb-8">
             <div className="relative flex-1">
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <Input
-                placeholder="חיפוש מושב..."
+                placeholder="Search sessions..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pr-10"
+                className="pl-10"
               />
             </div>
             <div className="flex gap-2 flex-wrap">
@@ -112,8 +112,8 @@ const Sessions = () => {
                 size="sm"
                 onClick={() => setSelectedField(null)}
               >
-                <Filter className="w-4 h-4 ml-1" />
-                הכל
+                <Filter className="w-4 h-4 mr-1" />
+                All
               </Button>
               {fields.map((field) => (
                 <Button
@@ -153,7 +153,7 @@ const Sessions = () => {
                           : "bg-primary/10 text-primary"
                       }`}
                     >
-                      {session.spotsLeft} מקומות
+                      {session.spotsLeft} spots
                     </span>
                   </div>
 
@@ -164,16 +164,16 @@ const Sessions = () => {
                     </div>
                     <div className="flex items-center gap-3 text-muted-foreground">
                       <Tag className="w-4 h-4 flex-shrink-0" />
-                      <span className="text-sm">{session.projectCount} פרויקטים</span>
+                      <span className="text-sm">{session.projectCount} projects</span>
                     </div>
                     <div className="flex items-center gap-3 text-muted-foreground">
                       <Users className="w-4 h-4 flex-shrink-0" />
-                      <span className="text-sm">{session.judgesNeeded} שופטים נדרשים</span>
+                      <span className="text-sm">{session.judgesNeeded} judges needed</span>
                     </div>
                   </div>
 
                   <Button className="w-full" disabled={session.spotsLeft === 0}>
-                    {session.spotsLeft === 0 ? "המושב מלא" : "הרשמה למושב"}
+                    {session.spotsLeft === 0 ? "Session Full" : "Register for Session"}
                   </Button>
                 </div>
               </div>
@@ -182,7 +182,7 @@ const Sessions = () => {
 
           {filteredSessions.length === 0 && (
             <div className="text-center py-16">
-              <p className="text-muted-foreground">לא נמצאו מושבים התואמים לחיפוש</p>
+              <p className="text-muted-foreground">No sessions match your search</p>
             </div>
           )}
         </div>

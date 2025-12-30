@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 
 const navLinks = [
-  { href: "/", label: "ראשי" },
-  { href: "/sessions", label: "מושבים" },
-  { href: "/projects", label: "פרויקטים" },
-  { href: "/about", label: "אודות" },
+  { href: "/", label: "Home" },
+  { href: "/sessions", label: "Sessions" },
+  { href: "/projects", label: "Projects" },
+  { href: "/about", label: "About" },
 ];
 
 export function Header() {
@@ -63,12 +63,12 @@ export function Header() {
                 <Link to="/dashboard">
                   <Button variant="ghost" size="sm" className="gap-2">
                     <LayoutDashboard className="w-4 h-4" />
-                    {profile?.full_name || "דשבורד"}
+                    {profile?.full_name || "Dashboard"}
                   </Button>
                 </Link>
                 <Button variant="outline" size="sm" onClick={handleSignOut} className="gap-2">
                   <LogOut className="w-4 h-4" />
-                  התנתקות
+                  Sign Out
                 </Button>
               </>
             ) : (
@@ -76,13 +76,13 @@ export function Header() {
                 <Link to="/login">
                   <Button variant="ghost" size="sm" className="gap-2">
                     <LogIn className="w-4 h-4" />
-                    התחברות
+                    Login
                   </Button>
                 </Link>
                 <Link to="/register">
                   <Button size="sm" className="gap-2">
                     <UserPlus className="w-4 h-4" />
-                    הרשמה
+                    Register
                   </Button>
                 </Link>
               </>
@@ -93,7 +93,7 @@ export function Header() {
           <button
             className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="תפריט"
+            aria-label="Menu"
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -122,19 +122,19 @@ export function Header() {
                 {user ? (
                   <>
                     <Link to="/dashboard" onClick={() => setIsMenuOpen(false)} className="flex-1">
-                      <Button variant="outline" size="sm" className="w-full">דשבורד</Button>
+                      <Button variant="outline" size="sm" className="w-full">Dashboard</Button>
                     </Link>
                     <Button size="sm" className="flex-1" onClick={handleSignOut}>
-                      התנתקות
+                      Sign Out
                     </Button>
                   </>
                 ) : (
                   <>
                     <Link to="/login" onClick={() => setIsMenuOpen(false)} className="flex-1">
-                      <Button variant="outline" size="sm" className="w-full">התחברות</Button>
+                      <Button variant="outline" size="sm" className="w-full">Login</Button>
                     </Link>
                     <Link to="/register" onClick={() => setIsMenuOpen(false)} className="flex-1">
-                      <Button size="sm" className="w-full">הרשמה</Button>
+                      <Button size="sm" className="w-full">Register</Button>
                     </Link>
                   </>
                 )}

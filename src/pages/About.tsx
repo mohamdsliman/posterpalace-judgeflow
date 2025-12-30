@@ -7,7 +7,7 @@ import {
   Target, 
   Users, 
   CheckCircle2, 
-  ArrowLeft,
+  ArrowRight,
   GraduationCap,
   Lightbulb,
   Heart
@@ -23,14 +23,14 @@ const About = () => {
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <Award className="w-4 h-4" />
-              אודות המערכת
+              About the System
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-              מערכת שיפוט פוסטרים מתקדמת
+              Advanced Poster Judging System
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              פלטפורמה חכמה לניהול והערכת פרויקטים אקדמיים בכנסים ותערוכות, 
-              המאפשרת לשופטים מהמכללה ומחוצה לה להשתתף בתהליך הערכה מקצועי ויעיל.
+              A smart platform for managing and evaluating academic projects at conferences and exhibitions, 
+              enabling judges from the college and beyond to participate in a professional and efficient evaluation process.
             </p>
           </div>
         </section>
@@ -43,9 +43,9 @@ const About = () => {
                 <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
                   <Target className="w-8 h-8 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">המטרה שלנו</h3>
+                <h3 className="text-xl font-semibold text-foreground mb-3">Our Goal</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  לייצר תהליך הערכה שקוף, מקצועי ויעיל לפרויקטי סיום בכנסים אקדמיים
+                  Create a transparent, professional, and efficient evaluation process for final projects at academic conferences
                 </p>
               </div>
 
@@ -53,9 +53,9 @@ const About = () => {
                 <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-6">
                   <Lightbulb className="w-8 h-8 text-accent" />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">החזון</h3>
+                <h3 className="text-xl font-semibold text-foreground mb-3">Our Vision</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  להוביל את המעבר לדיגיטציה של תהליכי הערכה אקדמיים בישראל
+                  Lead the transition to digitization of academic evaluation processes
                 </p>
               </div>
 
@@ -63,9 +63,9 @@ const About = () => {
                 <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
                   <Heart className="w-8 h-8 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">הערכים</h3>
+                <h3 className="text-xl font-semibold text-foreground mb-3">Our Values</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  שקיפות, הוגנות, נגישות ומצוינות בכל פרט ותהליך
+                  Transparency, fairness, accessibility, and excellence in every detail and process
                 </p>
               </div>
             </div>
@@ -76,9 +76,9 @@ const About = () => {
         <section className="py-20">
           <div className="container mx-auto px-4">
             <div className="text-center max-w-2xl mx-auto mb-16">
-              <h2 className="text-3xl font-bold text-foreground mb-4">איך זה עובד?</h2>
+              <h2 className="text-3xl font-bold text-foreground mb-4">How It Works</h2>
               <p className="text-lg text-muted-foreground">
-                תהליך פשוט בארבעה שלבים
+                A simple four-step process
               </p>
             </div>
 
@@ -86,23 +86,23 @@ const About = () => {
               {[
                 {
                   step: 1,
-                  title: "הרשמה כשופט",
-                  description: "צרו חשבון במערכת והזינו את פרטי ההתמחות שלכם",
+                  title: "Register as a Judge",
+                  description: "Create an account and enter your expertise details",
                 },
                 {
                   step: 2,
-                  title: "בחירת מושב",
-                  description: "בחרו את המושב המתאים לתחום ההתמחות ולזמינות שלכם",
+                  title: "Choose a Session",
+                  description: "Select the session that matches your expertise and availability",
                 },
                 {
                   step: 3,
-                  title: "צפייה בפרויקטים",
-                  description: "הכירו את הפרויקטים שיוצגו במושב שבחרתם",
+                  title: "View Projects",
+                  description: "Get to know the projects that will be presented in your chosen session",
                 },
                 {
                   step: 4,
-                  title: "הערכה ומשוב",
-                  description: "מלאו את טופס ההערכה לכל פרויקט לאחר ההצגה בכנס",
+                  title: "Evaluate & Provide Feedback",
+                  description: "Complete the evaluation form for each project after the conference presentation",
                 },
               ].map((item, index) => (
                 <div
@@ -131,15 +131,15 @@ const About = () => {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl font-bold text-foreground mb-6">
-                  למה להיות שופט?
+                  Why Become a Judge?
                 </h2>
                 <ul className="space-y-4">
                   {[
-                    "חשיפה לפרויקטים חדשניים וטכנולוגיות מתקדמות",
-                    "תרומה לדור הבא של מהנדסים ומפתחים",
-                    "הרחבת רשת הקשרים המקצועית",
-                    "תעודת הוקרה והכרה מהמכללה",
-                    "חוויה מעשירה ומשמעותית",
+                    "Exposure to innovative projects and advanced technologies",
+                    "Contribute to the next generation of engineers and developers",
+                    "Expand your professional network",
+                    "Certificate of appreciation from the college",
+                    "A rewarding and meaningful experience",
                   ].map((benefit, index) => (
                     <li key={index} className="flex items-start gap-3">
                       <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
@@ -155,7 +155,7 @@ const About = () => {
                   </div>
                   <div>
                     <div className="text-3xl font-bold text-foreground">120+</div>
-                    <div className="text-muted-foreground">שופטים פעילים</div>
+                    <div className="text-muted-foreground">Active Judges</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -164,7 +164,7 @@ const About = () => {
                   </div>
                   <div>
                     <div className="text-3xl font-bold text-foreground">85</div>
-                    <div className="text-muted-foreground">פרויקטים השנה</div>
+                    <div className="text-muted-foreground">Projects This Year</div>
                   </div>
                 </div>
               </div>
@@ -177,15 +177,15 @@ const About = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-2xl mx-auto text-center">
               <h2 className="text-3xl font-bold text-foreground mb-4">
-                מוכנים להצטרף?
+                Ready to Join?
               </h2>
               <p className="text-lg text-muted-foreground mb-8">
-                הירשמו עכשיו והיו חלק מכנס הפוסטרים
+                Register now and be part of the poster conference
               </p>
               <Button variant="hero" size="xl" asChild>
                 <Link to="/register" className="gap-2">
-                  הרשמה כשופט
-                  <ArrowLeft className="w-5 h-5" />
+                  Register as Judge
+                  <ArrowRight className="w-5 h-5" />
                 </Link>
               </Button>
             </div>
