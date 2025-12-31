@@ -12,6 +12,7 @@ import Register from "./pages/Register";
 import About from "./pages/About";
 import Dashboard from "./pages/Dashboard";
 import AdminSetup from "./pages/AdminSetup";
+import AdminUsers from "./pages/admin/Users";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,7 +24,7 @@ const App = () => (
         <Toaster />
         <Sonner position="top-center" />
         <BrowserRouter>
-        <Routes>
+          <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/sessions" element={<Sessions />} />
             <Route path="/projects" element={<Projects />} />
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/admin-setup" element={<AdminSetup />} />
+            <Route path="/admin/users" element={<AdminUsers />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
